@@ -1,9 +1,9 @@
 name: Publish to packages
 
 on:
-  push:
-    branches:
-      - main
+#   push:
+#     branches:
+#       - main
   workflow_dispatch:
 
 jobs:
@@ -50,7 +50,7 @@ jobs:
           target="dest/packages/preview/$NAME/$VERSION"
           rm -rf "$target"
           mkdir -p "$target"
-          rsync -a --exclude ".git" --exclude ".gitignore" "source/" "$target/"
+          rsync -a --exclude ".git" --exclude ".gitignore" --exclude ".github" "source/" "$target/"
 
       - name: Update template import
         env:
