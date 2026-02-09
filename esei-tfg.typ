@@ -1,11 +1,11 @@
 #import "@preview/unify:0.7.1": num, qty, numrange, qtyrange
-#import "@preview/physica:0.9.5": *
+#import "@preview/physica:0.9.8": *
 #let longitud-abstract = 138
 #let esei-tfg(
   titulo: "Título do Traballo de Fin de Grado",
   alumno: "D. Nome Alumna/o",
   tutor: "Nome do meu titor",
-  tfg_num: 123,
+  tfg_num: "XX-XX",
   area: "Linguaxes e Sistemas Informáticos",
   departamento: "Informática",
   fecha: "Xullo, 20XX",
