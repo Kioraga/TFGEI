@@ -2,14 +2,17 @@
 #import "@preview/physica:0.9.5": *
 #let longitud-abstract = 138
 #let unirfisica(
-  titulo: "Título de mi TFG",
-  alumno: "Mi nombre",
-  director: "Nombre de mi director",
+  titulo: "Título do Traballo de Fin de Grado",
+  alumno: "D. Nome Alumna/o",
+  tutor: "Nome do meu titor",
+  tfg_num: 123,
+  area: "Linguaxes e Sistemas Informáticos",
+  departamento: "Informática",
+  fecha: "Xullo, 20XX",
   resumen: lorem(longitud-abstract),
   abstract: lorem(longitud-abstract),
   pclave: lorem(6).replace(" ", ", ").replace(",,", ","),
   kwords: lorem(6).replace(" ", ", ").replace(",,", ","),
-  logo: none,
   agradecimientos: quote(attribution: [Plato], block: true)[#lorem(20)],
   doc,
 ) = {
@@ -18,7 +21,7 @@
     margin: (left: 3cm, right: 2cm),
     footer: none,
   )
-  set text(font: "calibri", size: 12.5pt, lang: "es")
+  set text(size: 12.5pt, lang: "es")
   set par(linebreaks: "optimized", justify: true, spacing: 1.8em, leading: 1.2em)
   let azulunir = rgb("#0098cd")
 
@@ -64,36 +67,40 @@
   */
 
   align(center)[
-    #logo
+    #v(12pt)
+    #image("logo_uvigo.png", width: 48%)
 
-    #text(font: "calibri", size: 24pt)[Universidad Internacional de La Rioja (UNIR)
+
+    #text(size: 17pt)[
+      #strong[E]SCOLA #strong[S]UPERIOR #strong[D]E #strong[E]NXEÑARÍA #strong[I]NFORMÁTICA
     ]
-
+    #v(65pt)
+    #text(size: 13pt)[Memoria do Traballo de Fin de Grao que presenta]
     #v(-10pt)
-    #text(font: "calibri", size: 20pt)[Escuela Superior de Ingeniería y Tecnología]
+    #text(size: 16pt, weight: "bold")[#alumno]
+    #v(-10pt)
+    #text(size: 13pt)[para a obtención do Título de Graduado en Enxeñaría Informática]
+    #v(10pt)
+    #text(size: 16pt, weight: "bold")[#titulo]
 
-    /*
-    Nombre del estudio y título del trabajo
-    */
-    #align(center + horizon)[
-      #text(size: 18pt)[Grado en Física]
-      #v(-10pt)
-      #text(size: 26pt, fill: azulunir, weight: "bold")[#titulo]
-    ]
-
-    #let fecha = datetime.today()
-
-    /*
-     Tabla inferior con los datos del TFG
-    */
-    #align(center + bottom)[
-      #table(
-        columns: (1fr, 1fr),
-        stroke: 0.1pt,
-        align: left,
-        table.header[Trabajo de fin de estudio presentado por: ][#alumno],
-        [Director/a:], [#director],
-        [Fecha:], [#fecha.display()],
+    #v(150pt)
+    #align(center)[
+      #grid(
+        columns: (auto, 1fr),
+        column-gutter: 16pt,
+        image("emblema_ing_informatica.png", width: 3.3cm),
+        align(left)[
+          #stack(
+            spacing: 8pt,
+            [#fecha],
+            v(25pt),
+            [#strong[Traballo de Fin de Grao Nº:]#h(1.5mm) #tfg_num],
+            v(25pt),
+            [#strong[Titor/a:]#h(1.5mm)  #tutor],
+            [#strong[Área de coñecemento:]#h(1.5mm)  #area],
+            [#strong[Departamento:]#h(1.5mm) #departamento],
+          )
+        ],
       )
     ]
   ]
@@ -111,7 +118,7 @@
   pagebreak()
 
   align(top)[
-    #text(fill: azulunir, size: 18pt, weight: "regular", font: "calibri")[Resumen]
+    #text(fill: azulunir, size: 18pt, weight: "regular")[Resumen]
 
     #resumen
 
