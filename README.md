@@ -1,5 +1,5 @@
 
-# TFGESEI
+# TFGEI
 This template is used to make bachelor thesis works for the [degree in Computer Engineering](https://esei.uvigo.es/es/estudos/grao-en-enxenaria-informatica/) at 
 Universidade de Vigo ([UVigo](https://www.uvigo.gal/)). 
 
@@ -7,8 +7,8 @@ Universidade de Vigo ([UVigo](https://www.uvigo.gal/)).
 In order to use it, just import it and apply a `show` rule: 
 
 ```typst
-#import "@local/tfgesei:0.1.0": tfgesei
-#show: tfgesei.with(
+#import "@local/tfgei:0.1.0": tfgei
+#show: tfgei.with(
   titulo: "Título do Traballo de Fin de Grado",
   alumno: "D. Nome Alumna/o",
   tutor: "Nome do meu titor",
@@ -21,7 +21,7 @@ In order to use it, just import it and apply a `show` rule:
 ```
 
 ## Parameters
-The main entrypoint is `tfgesei`. These are the supported parameters:
+The main entrypoint is `tfgei`. These are the supported parameters:
 
 | Name | Type | Default | Notes |
 | --- | --- | --- | --- |
@@ -41,7 +41,7 @@ The main entrypoint is `tfgesei`. These are the supported parameters:
 To hide optional pages:
 
 ```typst
-#show: tfgesei.with(
+#show: tfgei.with(
   resumen: none,
   agradecimientos: none,
 )
