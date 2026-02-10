@@ -1,7 +1,7 @@
 #import "@preview/unify:0.7.1": num, numrange, qty, qtyrange
 #import "@preview/physica:0.9.8": *
-#let longitud-abstract = 138
-#let esei-tfg(
+#let longitud-resumen = 138
+#let tfgei(
   titulo: "Título do Traballo de Fin de Grado",
   alumno: "D. Nome Alumna/o",
   tutor: "Nome do meu titor",
@@ -9,10 +9,8 @@
   area: "Linguaxes e Sistemas Informáticos",
   departamento: "Informática",
   fecha: "Xullo, 20XX",
-  resumen: lorem(longitud-abstract),
-  abstract: lorem(longitud-abstract),
+  resumen: lorem(longitud-resumen),
   pclave: lorem(6).replace(" ", ", ").replace(",,", ","),
-  //kwords: lorem(6).replace(" ", ", ").replace(",,", ","),
   agradecimientos: quote(attribution: [Plato], block: true)[#lorem(20)],
   idioma: "gl",
   doc,
@@ -30,7 +28,7 @@
       tutor: "Titor/a:",
       area: "Área de coñecemento:",
       departamento: "Departamento:",
-      resumen: "Resumen",
+      resumen: "Resumo",
       palabras_clave: "Palabras clave:",
       indice: "Índice de contenidos",
       lang: "gl",
@@ -142,25 +140,17 @@
     ]
   }
   
-  pagebreak()
-  
-  align(top)[
-    #text(fill: black, size: 18pt, weight: "regular")[#labels.resumen]
-    
-    #resumen
-    
-    #text(weight: "bold")[#labels.palabras_clave]
-    #pclave
-  ]
-  /*align(bottom)[
-    #text(fill: black, size: 18pt)[Abstract]
-  
-    #abstract
-  
-    #text(weight: "bold")[Keywords:]
-    #kwords
-  ]*/
-  
+  if (resumen != none) {
+    pagebreak()
+    align(top)[
+      #text(fill: black, size: 18pt, weight: "regular")[#labels.resumen]
+      
+      #resumen
+      
+      #text(weight: "bold")[#labels.palabras_clave]
+      #pclave
+    ]
+  }
   
   // text(font: "calibri", size: 18pt, fill: azulunir, weight: "light")[Índice de contenidos]
   outline(title: labels.indice)

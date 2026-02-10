@@ -1,11 +1,10 @@
+//#import "@local/tfgei:0.1.0": *
+#import "../tfgei.typ": *
 
-//#import "@local/esei-tfg:0.1.0": *
-#import "../esei-tfg.typ": *
-#show: esei-tfg.with(
+#show: tfgei.with(
   titulo: "Título do Traballo de Fin de Grado",
   alumno: "D. Nome Alumna/o",
   agradecimientos: quote(attribution: "Yo", block: true)[_A mis padres_],
-  abstract: lorem(138),
   resumen: lorem(138),
   idioma: "gl",
 )

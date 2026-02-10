@@ -1,14 +1,14 @@
 [package]
-name = "esei-tfg"
+name = "tfgei"
 version = "0.1.0"
-entrypoint = "esei-tfg.typ"
+entrypoint = "tfgei.typ"
 authors = ["Daniel Cancelas"]
 license = "MIT"
-description = "Plantilla para hacer TFGs en el Grado en Ingeniería Informática de la ESEI"
+description = "Template for making final degree projects in the Computer Science degree at ESEI (University of Vigo)."
 repository = "https://github.com/Kioraga/ESEI-TFG"
 categories = ["thesis"]
 
 [template]
 path = "template"
-entrypoint = "tfg.typ"
+entrypoint = "tfgei.typ"
 thumbnail = "portada.png"
