@@ -23,19 +23,19 @@ In order to use it, just import it and apply a `show` rule:
 ## Parameters
 The main entrypoint is `tfgei`. These are the supported parameters:
 
-| Name | Type | Default | Notes |
-| --- | --- | --- | --- |
-| `titulo` | string | "Titulo do Traballo de Fin de Grado" | Title shown on cover. |
-| `alumno` | string | "D. Nome Alumna/o" | Author name on cover. |
-| `tutor` | string | "Nome do meu titor" | Tutor name on cover. |
-| `tfgnum` | string | "XX-XX" | TFG number. |
-| `area` | string | "Linguaxes e Sistemas Informaticos" | Knowledge area. |
-| `departamento` | string | "Informatica" | Department. |
-| `fecha` | string | "Xullo, 20XX" | Submission date. |
-| `resumen` | content | `lorem(138)` | Optional. Set to `none` to hide the resumen page. |
-| `pclave` | content | `lorem(6)` | Keywords line under resumen. Ignored if `resumen` is `none`. |
-| `agradecimientos` | content | placeholder | Optional. Set to `none` to hide acknowledgements. |
-| `idioma` | string | "gl" | Labels language: `gl` or `es`. |
+| Name | Type | Notes |
+| --- | --- | --- |
+| `titulo` | string | Title shown on cover. |
+| `alumno` | string | Author name on cover. |
+| `tutor` | string | Tutor name on cover. |
+| `tfgnum` | string | TFG number. |
+| `area` | string | Knowledge area. |
+| `departamento` | string | Department. |
+| `fecha` | string | Submission date. |
+| `resumen` | content | Optional. Set to `none` to hide the resumen page. |
+| `pclave` | content | Keywords line under resumen. Ignored if `resumen` is `none`. |
+| `agradecimientos` | content | Optional. Set to `none` to hide acknowledgements. |
+| `idioma` | string | Labels language: `gl` or `es`. |
 
 ## Optional sections
 To hide optional pages:
