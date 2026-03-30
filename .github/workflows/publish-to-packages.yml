@@ -68,7 +68,7 @@ jobs:
               lines = f.read().splitlines()
 
           old_line = '#import "../tfgei.typ": *'
-          new_line = f'#import "@local/{name}:{version}": *'
+          new_line = f'#import "@preview/{name}:{version}": *'
           new_lines = [new_line if line.strip() == old_line else line for line in lines]
 
           with open(path, "w", encoding="utf-8") as f:
