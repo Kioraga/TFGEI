@@ -67,17 +67,9 @@ jobs:
           with open(path, "r", encoding="utf-8") as f:
               lines = f.read().splitlines()
 
-          new_lines = []
-          i = 0
-          while i < len(lines):
-              line = lines[i]
-              next_line = lines[i + 1] if i + 1 < len(lines) else ""
-              if line.startswith("//#import \"@local/esei-tfg:") and next_line.startswith("#import \"../esei-tfg.typ\": *"):
-                  new_lines.append(f"#import \"@preview/esei-tfg:{version}\": *")
-                  i += 2
-                  continue
-              new_lines.append(line)
-              i += 1
+          old_line = '#import "../tfgei.typ": *'
+          new_line = f'#import "@local/{name}:{version}": *'
+          new_lines = [new_line if line.strip() == old_line else line for line in lines]
 
           with open(path, "w", encoding="utf-8") as f:
               f.write("\n".join(new_lines) + "\n")

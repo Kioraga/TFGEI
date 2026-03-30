@@ -1,4 +1,3 @@
-//#import "@local/tfgei:0.1.0": *
 #import "../tfgei.typ": *
 
 #show: tfgei.with(
