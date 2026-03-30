@@ -1,6 +1,6 @@
 [package]
 name = "tfgei"
-version = "0.1.0"
+version = "0.1.1"
 entrypoint = "tfgei.typ"
 authors = ["Daniel Cancelas"]
 license = "MIT"
