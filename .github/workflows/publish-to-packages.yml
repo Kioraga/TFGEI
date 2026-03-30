@@ -62,7 +62,7 @@ jobs:
 
           name = os.environ["NAME"]
           version = os.environ["VERSION"]
-          path = os.path.join("dest", "packages", "preview", name, version, "template", "tfg.typ")
+          path = os.path.join("dest", "packages", "preview", name, version, "template", "main.typ")
 
           with open(path, "r", encoding="utf-8") as f:
               lines = f.read().splitlines()
