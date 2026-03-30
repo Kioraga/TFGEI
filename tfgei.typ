@@ -13,6 +13,19 @@
   pclave: lorem(6).replace(" ", ", ").replace(",,", ","),
   agradecimientos: quote(attribution: [Plato], block: true)[#lorem(20)],
   idioma: "gl",
+  salto-capitulo: true,
+  indice-figuras: (
+    enabled: false,
+    titulo: "",
+  ),
+  indice-tablas: (
+    enabled: false,
+    titulo: "",
+  ),
+  indice-listados: (
+    enabled: false,
+    titulo: "",
+  ),
   doc,
 ) = {
   set page(
@@ -31,6 +44,9 @@
       resumen: "Resumo",
       palabras_clave: "Palabras clave:",
       indice: "Índice de contenidos",
+      indice_figuras: "Índice de figuras",
+      indice_tablas: "Índice de tablas",
+      indice_listados: "Índice de listados",
       lang: "gl",
     ),
     es: (
@@ -43,6 +59,9 @@
       resumen: "Resumen",
       palabras_clave: "Palabras clave:",
       indice: "Índice de contenidos",
+      indice_figuras: "Índice de figuras",
+      indice_tablas: "Índice de tablas",
+      indice_listados: "Índice de listados",
       lang: "es",
     ),
   )
@@ -68,7 +87,9 @@
   */
   set heading(numbering: "1.")
   show heading.where(level: 1): item => {
-    pagebreak()
+    if salto-capitulo {
+      pagebreak(weak: true)
+    }
     v(130pt)
     if item.numbering != none {
       text(black, weight: "bold", size: 20pt)[#context counter(heading).display()]
@@ -172,4 +193,39 @@
   )
   counter(page).update(1)
   doc
+
+  // Mostrar índices de figuras, tablas y listados, si están habilitados.
+  let fig-t(kind) = figure.where(kind: kind)
+  let has-fig(kind) = counter(fig-t(kind)).get().at(0) > 0
+  if indice-figuras.enabled or indice-tablas.enabled or indice-listados.enabled {
+    show outline: set heading(outlined: true)
+    context {
+      let imgs = indice-figuras.enabled and has-fig(image)
+      let tbls = indice-tablas.enabled and has-fig(table)
+      let lsts = indice-listados.enabled and has-fig(raw)
+
+      if imgs or tbls or lsts {
+        pagebreak()
+      }
+
+      if imgs {
+        outline(
+          title: indice-figuras.at("titulo", default: labels.indice_figuras),
+          target: fig-t(image),
+        )
+      }
+      if tbls {
+        outline(
+          title: indice-tablas.at("titulo", default: labels.indice_tablas),
+          target: fig-t(table),
+        )
+      }
+      if lsts {
+        outline(
+          title: indice-listados.at("titulo", default: labels.indice_listados),
+          target: fig-t(raw),
+        )
+      }
+    }
+  }
 }

@@ -7,6 +7,10 @@
   agradecimientos: quote(attribution: "Yo", block: true)[_A mis padres_],
   resumen: lorem(138),
   idioma: "gl",
+  salto-capitulo: true,
+  indice-figuras: (enabled: true),
+  indice-tablas: (enabled: true),
+  indice-listados: (enabled: true),
 )
 
 // Esto es para que la aplicación web reconozca el texto como en español y haga mejor detección de sintaxis.
@@ -30,6 +34,48 @@ El nombre de esta sección es opcional. #link("https://www.uvigo.gal/")[Aquí] t
 == Materiales
 
 = Resultados y discusión
+
+== Ejemplo de figura
+
+#figure(
+  rect(
+    width: 85%,
+    height: 4cm,
+    fill: luma(240),
+    stroke: 0.6pt + luma(140),
+    radius: 4pt,
+  ),
+  kind: image,
+  caption: [Esquema simplificado del sistema de medida.],
+)
+
+== Ejemplo de tabla
+
+#figure(
+  table(
+    columns: 3,
+    align: center + horizon,
+    table.header([
+      Magnitud
+    ], [Valor], [Unidad]),
+    [Longitud], [60], [m],
+    [Velocidad], [72], [km/h],
+    [Tiempo], [3000], [s],
+  ),
+  caption: [Resumen de magnitudes del problema.],
+)
+
+== Ejemplo de listado
+
+#figure(
+  raw(
+    block: true,
+    lang: "typ",
+    "#let v = qty(72, \"kilo meter per hour\")\n#let d = qty(60, \"m\")\n#let t = d / v\n#t",
+  ),
+  kind: raw,
+  caption: [Cálculo de tiempo en Typst con unidades.],
+)
 
 = Conclusiones
 

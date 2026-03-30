@@ -36,6 +36,10 @@ The main entrypoint is `tfgei`. These are the supported parameters:
 | `pclave` | content | Keywords line under resumen. Ignored if `resumen` is `none`. |
 | `agradecimientos` | content | Optional. Set to `none` to hide acknowledgements. |
 | `idioma` | string | Labels language: `gl` or `es`. |
+| `salto-capitulo` | bool | If `true`, each level-1 heading starts on a new page. If `false`, chapters continue in flow. |
+| `indice-figuras` | dictionary | Figure index configuration. Keys: `enabled` (bool), `titulo` (string). |
+| `indice-tablas` | dictionary | Table index configuration. Keys: `enabled` (bool), `titulo` (string). |
+| `indice-listados` | dictionary | Listings index configuration. Keys: `enabled` (bool), `titulo` (string). |
 
 ## Optional sections
 To hide optional pages:
