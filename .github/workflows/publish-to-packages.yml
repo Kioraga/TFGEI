@@ -50,30 +50,7 @@ jobs:
           target="dest/packages/preview/$NAME/$VERSION"
           rm -rf "$target"
           mkdir -p "$target"
-          rsync -a --exclude ".git" --exclude ".gitignore" --exclude ".github" "source/" "$target/"
-
-      - name: Update template import
-        env:
-          NAME: ${{ steps.pkg.outputs.name }}
-          VERSION: ${{ steps.pkg.outputs.version }}
-        run: |
-          python - <<'PY'
-          import os
-
-          name = os.environ["NAME"]
-          version = os.environ["VERSION"]
-          path = os.path.join("dest", "packages", "preview", name, version, "template", "main.typ")
-
-          with open(path, "r", encoding="utf-8") as f:
-              lines = f.read().splitlines()
-
-          old_line = '#import "../tfgei.typ": *'
-          new_line = f'#import "@preview/{name}:{version}": *'
-          new_lines = [new_line if line.strip() == old_line else line for line in lines]
-
-          with open(path, "w", encoding="utf-8") as f:
-              f.write("\n".join(new_lines) + "\n")
-          PY
+          rsync -a --exclude ".git" --exclude ".gitignore" --exclude ".github" --exclude "example.typ" "source/" "$target/"
 
       - name: Commit and push
         env:
@@ -81,6 +58,8 @@ jobs:
           VERSION: ${{ steps.pkg.outputs.version }}
         run: |
           cd dest
+          BRANCH="publish/$NAME-$VERSION"
+          git checkout -B "$BRANCH"
           if [ -z "$(git status --porcelain)" ]; then
             echo "No changes to commit."
             exit 0
@@ -89,4 +68,4 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add "packages/preview/$NAME/$VERSION"
           git commit -m "Publish $NAME $VERSION"
-          git push
+          git push --set-upstream origin "$BRANCH"
