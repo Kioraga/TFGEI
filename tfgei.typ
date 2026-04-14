@@ -14,6 +14,10 @@
   agradecimientos: quote(attribution: [Plato], block: true)[#lorem(20)],
   idioma: "gl",
   salto-capitulo: true,
+  indice-contenido: (
+    enabled: true,
+    profundidad: none
+  ),
   indice-figuras: (
     enabled: false,
     titulo: "",
@@ -174,7 +178,9 @@
   }
   
   // text(font: "calibri", size: 18pt, fill: azulunir, weight: "light")[Índice de contenidos]
-  outline(title: labels.indice)
+  if indice-contenido.enabled {
+    outline(title: labels.indice, depth: indice-contenido.profundidad)
+  }
   //pagebreak()
   set page(
     footer: context [

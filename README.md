@@ -7,7 +7,7 @@ Universidade de Vigo ([UVigo](https://www.uvigo.gal/)).
 In order to use it, just import it and apply a `show` rule: 
 
 ```typst
-#import "@preview/tfgei:0.1.1": tfgei
+#import "@preview/tfgei:0.1.2": tfgei
 #show: tfgei.with(
   titulo: "Título do Traballo de Fin de Grado",
   alumno: "D. Nome Alumna/o",
@@ -37,6 +37,7 @@ The main entrypoint is `tfgei`. These are the supported parameters:
 | `agradecimientos` | content | Optional. Set to `none` to hide acknowledgements. |
 | `idioma` | string | Labels language: `gl` or `es`. |
 | `salto-capitulo` | bool | If `true`, each level-1 heading starts on a new page. If `false`, chapters continue in flow. |
+| `indice-contenido` | dictionary | Table of contents configuration. Keys: `enabled` (bool), `profundidad` (int). |
 | `indice-figuras` | dictionary | Figure index configuration. Keys: `enabled` (bool), `titulo` (string). |
 | `indice-tablas` | dictionary | Table index configuration. Keys: `enabled` (bool), `titulo` (string). |
 | `indice-listados` | dictionary | Listings index configuration. Keys: `enabled` (bool), `titulo` (string). |
