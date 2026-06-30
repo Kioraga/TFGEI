@@ -7,7 +7,7 @@ Universidade de Vigo ([UVigo](https://www.uvigo.gal/)).
 In order to use it, just import it and apply a `show` rule: 
 
 ```typst
-#import "@preview/tfgei:0.1.2": tfgei
+#import "@preview/tfgei:0.2.0": tfgei
 #show: tfgei.with(
   titulo: "Título do Traballo de Fin de Grado",
   alumno: "D. Nome Alumna/o",
@@ -42,7 +42,7 @@ The main entrypoint is `tfgei`. These are the supported parameters:
 | `indice-tablas` | dictionary | Table index configuration. Keys: `enabled` (bool), `titulo` (string). |
 | `indice-listados` | dictionary | Listings index configuration. Keys: `enabled` (bool), `titulo` (string). |
 | `numeracion` | dictionary | Per-level numbering toggle. Keys are level numbers as strings (`"1"`, `"2"`, `"3"`), values are bool. Default: show all. Example: `("3": false)` hides numbering for level 3 headings. |
-| `encabezado` | int | Header mode: `0` (default, shows student name + thesis title), `1` (shows current chapter number + name with bottom line), `2` (pairs: even pages show chapter info, odd pages show document title). |
+| `encabezado` | int | Header mode: `0` (default, shows student name + thesis title), `1` (shows current chapter number + name with bottom line), `2` (even pages: chapter number + name with line; odd pages: only chapter name). |
 
 ## Optional sections
 To hide optional pages:
