@@ -35,6 +35,13 @@ jobs:
               f.write(f"version={version}\n")
           PY
 
+      - name: Update version in README
+        env:
+          VERSION: ${{ steps.pkg.outputs.version }}
+        working-directory: source
+        run: |
+          sed -i "s|@preview/tfgei:[0-9.]*\"|@preview/tfgei:$VERSION\"|" README.md
+
       - name: Checkout destination
         uses: actions/checkout@v4
         with:
