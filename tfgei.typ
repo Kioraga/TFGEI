@@ -30,6 +30,8 @@
     enabled: false,
     titulo: "",
   ),
+  numeracion: (:),
+  encabezado: 0,
   doc,
 ) = {
   set page(
@@ -71,7 +73,7 @@
   )
   let labels = etiquetas.at(idioma, default: etiquetas.gl)
 
-  set text(size: 12.5pt, lang: labels.lang)
+  set text(size: 11pt, lang: labels.lang)
   set par(linebreaks: "optimized", justify: true, spacing: 1.8em, leading: 1.2em)
   //let azulunir = rgb("#0098cd")
   
@@ -87,33 +89,56 @@
   let longitud_abstract = 130
   
   /*
+  Estado para el capítulo actual (header modo "capítulo")
+  */
+  let cur-chapter = state("cur-chapter", [])
+
+  /*
   Estilo de los títulos de cabecera de nivel 1 (sección )
   */
   set heading(numbering: "1.")
   show heading.where(level: 1): item => {
+    cur-chapter.update(item.body)
     if salto-capitulo {
       pagebreak(weak: true)
     }
-    v(130pt)
+    v(5em)
     if item.numbering != none {
       text(black, weight: "bold", size: 20pt)[#context counter(heading).display()]
       " "
     }
     text(black, weight: "bold", 20pt)[#item.body]
-    v(0.1em)
+    v(-0.6em)
+    line(length: 100%)
+    v(1.5em)
   }
-  
+
   /*
   Estilo de los títulos de cabecera de nivel 2 (subsección)
   */
   show heading.where(level: 2): item => {
     v(20pt)
-    text(black, weight: "bold", size: 15pt)[#context counter(heading).display()]
-    " "
+    if numeracion.at("2", default: true) {
+      text(black, weight: "bold", size: 15pt)[#context counter(heading).display()]
+      " "
+    }
     text(black, weight: "bold", 15pt)[#item.body]
     v(0.1em)
   }
-  
+
+  /*
+  Estilo de los títulos de cabecera de nivel 3 (subsubsección)
+  */
+  show heading.where(level: 3): item => {
+    v(10pt)
+    if numeracion.at("3", default: true) {
+      text(black, weight: "bold", size: 13pt)[#context counter(heading).display()]
+      " "
+    }
+    text(black, weight: "bold", 13pt)[#item.body]
+    v(0.3em)
+  }
+
   /*
   Definición de la portada
   */
@@ -183,19 +208,43 @@
   }
   //pagebreak()
   set page(
+    margin: (left: 3cm, right: 2.5cm, top: 2.5cm, bottom: 1.5cm),
     footer: context [
       #set align(right)
       #set text(8pt)
       #text(13pt)[#counter(page).display()]
     ],
-    header: [
-      #set text(10pt)
-      #align(right)[
-        #alumno
-        #v(-0.9em)
-        #titulo
-      ]
-    ],
+    header: context {
+      set text(10pt)
+      let nums = counter(heading).get()
+      let ch-num = if nums.len() > 0 { str(nums.first()) + "." } else { "" }
+      if encabezado == 0 {
+        align(right)[
+          #alumno
+          #v(-0.9em)
+          #titulo
+        ]
+      } else if encabezado == 1 {
+        align(left)[
+          Capítulo #ch-num
+          #cur-chapter.get()
+        ]
+        v(-1em)
+        line(length: 100%, stroke: 0.6pt)
+      } else if encabezado == 2 {
+        let page-num = counter(page).get().first()
+        if calc.rem(page-num, 2) == 0 {
+          align(right)[
+            Capítulo #ch-num
+            #cur-chapter.get()
+          ]
+        } else {
+          align(right)[#cur-chapter.get()]
+        }
+        v(-1em)
+        line(length: 100%, stroke: 0.6pt)
+      }
+    },
   )
   counter(page).update(1)
   doc

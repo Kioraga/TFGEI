@@ -10,6 +10,8 @@
   indice-figuras: (enabled: true),
   indice-tablas: (enabled: true),
   indice-listados: (enabled: true),
+  numeracion: ("1": true),
+  encabezado: 0,
 )
 
 // Esto es para que la aplicación web reconozca el texto como en español y haga mejor detección de sintaxis.
@@ -31,6 +33,10 @@ El nombre de esta sección es opcional. #link("https://www.uvigo.gal/")[Aquí] t
 = Material y métodos
 
 == Materiales
+#lorem(30)
+
+=== Tipos de materiales
+#lorem(100)
 
 = Resultados y discusión
 
