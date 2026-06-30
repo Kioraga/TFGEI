@@ -1,6 +1,38 @@
 #import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
 #import "@preview/physica:0.9.8": *
 #let longitud-resumen = 138
+#let in-annex = state("in-annex", false)
+#let annex-offset-state = state("annex-offset", 0)
+#let cur-chapter-num = state("cur-chapter-num", 0)
+#let cur-annex-num = state("cur-annex-num", 0)
+#let show-chapter-label = state("show-chapter-label", false)
+
+#let anexos(body) = {
+  pagebreak()
+
+  context {
+    let saved = counter(heading).get()
+    annex-offset-state.update(saved.at(0, default: 0))
+    counter(heading).update(0)
+    []
+  }
+
+  show heading.where(level: 1): set heading(numbering: (..n) => {
+    "Anexo " + numbering("I", n.at(0)) + "."
+  })
+
+  in-annex.update(true)
+  cur-annex-num.update(0)
+  body
+  in-annex.update(false)
+
+  context {
+    let offset = annex-offset-state.get()
+    counter(heading).update(offset)
+    []
+  }
+}
+
 #let tfgei(
   titulo: "Título do Traballo de Fin de Grado",
   alumno: "D. Nome Alumna/o",
@@ -49,6 +81,8 @@
       departamento: "Departamento:",
       resumen: "Resumo",
       palabras_clave: "Palabras clave:",
+      capitulo: "Capítulo",
+      anexo: "Anexo",
       indice: "Índice de contenidos",
       indice_figuras: "Índice de figuras",
       indice_tablas: "Índice de tablas",
@@ -64,6 +98,8 @@
       departamento: "Departamento:",
       resumen: "Resumen",
       palabras_clave: "Palabras clave:",
+      capitulo: "Capítulo",
+      anexo: "Anexo",
       indice: "Índice de contenidos",
       indice_figuras: "Índice de figuras",
       indice_tablas: "Índice de tablas",
@@ -78,9 +114,15 @@
   //let azulunir = rgb("#0098cd")
   
   show link: it => {
-    if not (it.body.text.contains(it.dest)) {
+    if type(it.dest) == str {
+      if it.body.text.contains(it.dest) {
+        text(fill: blue, font: "IBM Plex Mono", size: 10.2pt, underline(it))
+      } else {
+        text(fill: blue, underline(it))
+      }
+    } else {
       text(fill: blue, underline(it))
-    } else { text(fill: blue, font: "IBM Plex Mono", size: 10.2pt, underline(it)) }
+    }
   }
   
   /*
@@ -99,6 +141,14 @@
   set heading(numbering: "1.")
   show heading.where(level: 1): item => {
     cur-chapter.update(item.body)
+    show-chapter-label.update(item.numbering != none)
+    if item.numbering != none {
+      if in-annex.get() {
+        cur-annex-num.update(n => n + 1)
+      } else {
+        cur-chapter-num.update(n => n + 1)
+      }
+    }
     if salto-capitulo {
       pagebreak(weak: true)
     }
@@ -216,8 +266,17 @@
     ],
     header: context {
       set text(10pt)
-      let nums = counter(heading).get()
-      let ch-num = if nums.len() > 0 { str(nums.first()) + "." } else { "" }
+      let is-annex = in-annex.get()
+      let ch-show = show-chapter-label.get()
+      let ch-label = if is-annex { labels.anexo } else { labels.capitulo }
+      let ch-num-val = if ch-show {
+        if is-annex { cur-annex-num.get() } else { cur-chapter-num.get() }
+      } else { 0 }
+      let ch-num = if is-annex and ch-num-val > 0 {
+        numbering("I", ch-num-val) + "."
+      } else if ch-num-val > 0 {
+        str(ch-num-val) + "."
+      } else { "" }
       if encabezado == 0 {
         align(right)[
           #alumno
@@ -226,7 +285,9 @@
         ]
       } else if encabezado == 1 {
         align(left)[
-          Capítulo #ch-num
+          #if ch-show [
+            #ch-label #ch-num
+          ]
           #cur-chapter.get()
         ]
         v(-1em)
@@ -235,7 +296,9 @@
         let page-num = counter(page).get().first()
         if calc.rem(page-num, 2) == 0 {
           align(right)[
-            Capítulo #ch-num
+            #if ch-show [
+              #ch-label #ch-num
+            ]
             #cur-chapter.get()
           ]
         } else {
@@ -254,6 +317,7 @@
   let has-fig(kind) = counter(fig-t(kind)).get().at(0) > 0
   if indice-figuras.enabled or indice-tablas.enabled or indice-listados.enabled {
     show outline: set heading(outlined: true)
+    show-chapter-label.update(false)
     context {
       let imgs = indice-figuras.enabled and has-fig(image)
       let tbls = indice-tablas.enabled and has-fig(table)
