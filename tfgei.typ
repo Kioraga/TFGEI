@@ -292,7 +292,11 @@
 
   // ── Índice de contenidos ───────────────────────────────────────
   if indice-contenido.enabled {
-    outline(title: labels.indice, depth: indice-contenido.profundidad)
+    outline(
+      title: labels.indice,
+      depth: indice-contenido.profundidad,
+      indent: 1.2em,
+    )
   }
 
   // ── Generador de índices adicionales ────────────────────────────
