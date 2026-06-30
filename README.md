@@ -34,6 +34,8 @@ The main entrypoint is `tfgei`. These are the supported parameters:
 | `fecha` | string | Submission date. |
 | `resumen` | content | Optional. Set to `none` to hide the resumen page. |
 | `pclave` | content | Keywords line under resumen. Ignored if `resumen` is `none`. |
+| `abstract` | content | Optional. English abstract, shown after resumen when not `none`. Independent of `idioma`. |
+| `kwords` | content | English keywords line under abstract. Ignored if `abstract` is `none`. |
 | `agradecimientos` | content | Optional. Set to `none` to hide acknowledgements. |
 | `idioma` | string | Labels language: `gl` or `es`. |
 | `salto-capitulo` | bool | If `true`, each level-1 heading starts on a new page. If `false`, chapters continue in flow. |
@@ -41,6 +43,7 @@ The main entrypoint is `tfgei`. These are the supported parameters:
 | `indice-figuras` | dictionary | Figure index configuration. Keys: `enabled` (bool), `titulo` (string). |
 | `indice-tablas` | dictionary | Table index configuration. Keys: `enabled` (bool), `titulo` (string). |
 | `indice-listados` | dictionary | Listings index configuration. Keys: `enabled` (bool), `titulo` (string). |
+| `indice-pos` | bool | If `true` (default), figure/table/listing indices appear after the table of contents. If `false`, they appear at the end of the document. When placed at the beginning, indices use the preamble page layout (no headers/footers). |
 | `numeracion` | dictionary | Per-level numbering toggle. Keys are level numbers as strings (`"1"`, `"2"`, `"3"`), values are bool. Default: show all. Example: `("3": false)` hides numbering for level 3 headings. |
 | `encabezado` | int | Header mode: `0` (default, shows student name + thesis title), `1` (shows current chapter number + name with bottom line), `2` (even pages: chapter number + name with line; odd pages: only chapter name). |
 

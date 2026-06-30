@@ -60,7 +60,7 @@
   resumen: lorem(resume-len),
   pclave: lorem(6).replace(" ", ", ").replace(",,", ","),
   // Resumen en inglés (se muestra siempre que no sea none)
-  abstract: lorem(abstract-len),
+  abstract: none,
   kwords: lorem(6).replace(" ", ", ").replace(",,", ","),
   // Agradecimientos (none para omitir)
   agradecimientos: quote(attribution: [Plato], block: true)[#lorem(20)],
@@ -86,6 +86,8 @@
     enabled: false,
     titulo: "",
   ),
+  // Índices adicionales: true = tras el TOC, false = al final
+  indice-pos: true,
   // Activar/desactivar numeración por nivel: ("2": false) oculta nº en subsecciones
   numeracion: (:),
   // Modo del encabezado: 0 = nombre+ título, 1 = capítulo, 2 = alterno par/impar
@@ -293,6 +295,38 @@
     outline(title: labels.indice, depth: indice-contenido.profundidad)
   }
 
+  // ── Generador de índices adicionales ────────────────────────────
+  // Se reutiliza tanto para la posición inicial como final.
+  let make-indices() = {
+    if indice-figuras.enabled or indice-tablas.enabled or indice-listados.enabled {
+      context {
+        pagebreak()
+        if indice-figuras.enabled {
+          outline(
+            title: indice-figuras.at("titulo", default: labels.indice_figuras),
+            target: figure.where(kind: image),
+          )
+        }
+        if indice-tablas.enabled {
+          outline(
+            title: indice-tablas.at("titulo", default: labels.indice_tablas),
+            target: figure.where(kind: table),
+          )
+        }
+        if indice-listados.enabled {
+          outline(
+            title: indice-listados.at("titulo", default: labels.indice_listados),
+            target: figure.where(kind: raw),
+          )
+        }
+      }
+    }
+  }
+
+  if indice-pos {
+    make-indices()
+  }
+
   // ── Configuración de página con encabezado y pie ───────────────
   set page(
     margin: (left: 3cm, right: 2.5cm, top: 2.5cm, bottom: 1.5cm),
@@ -352,41 +386,10 @@
   counter(page).update(1)
   doc
 
-  // ── Índices de figuras, tablas y listados ──────────────────────
-  // Se generan al final del documento si están habilitados.
-  // Se desactiva la etiqueta de capítulo en el encabezado para estas páginas.
-  let fig-t(kind) = figure.where(kind: kind)
-  let has-fig(kind) = counter(fig-t(kind)).get().at(0) > 0
-  if indice-figuras.enabled or indice-tablas.enabled or indice-listados.enabled {
+  // ── Índices de figuras, tablas y listados (al final) ──────────
+  if not indice-pos {
     show outline: set heading(outlined: true)
     show-chapter-label.update(false)
-    context {
-      let imgs = indice-figuras.enabled and has-fig(image)
-      let tbls = indice-tablas.enabled and has-fig(table)
-      let lsts = indice-listados.enabled and has-fig(raw)
-
-      if imgs or tbls or lsts {
-        pagebreak()
-      }
-
-      if imgs {
-        outline(
-          title: indice-figuras.at("titulo", default: labels.indice_figuras),
-          target: fig-t(image),
-        )
-      }
-      if tbls {
-        outline(
-          title: indice-tablas.at("titulo", default: labels.indice_tablas),
-          target: fig-t(table),
-        )
-      }
-      if lsts {
-        outline(
-          title: indice-listados.at("titulo", default: labels.indice_listados),
-          target: fig-t(raw),
-        )
-      }
-    }
+    make-indices()
   }
 }
